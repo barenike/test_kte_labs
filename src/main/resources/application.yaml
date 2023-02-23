@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/test_kte_labs'
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+  main:
+    allow-circular-references: true
