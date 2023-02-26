@@ -22,14 +22,14 @@ public class OrderDetailEntity {
     @Column(name = "product_id", nullable = false)
     private UUID productId;
 
-    @Column(name = "amount", nullable = false)
-    private Integer amount;
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 
     @Column(name = "subtotal_price", nullable = false)
-    private Integer subtotalPrice;
+    private Double subtotalPrice;
 
     @Column(name = "total_price", nullable = false)
-    private Integer totalPrice;
+    private Double totalPrice;
 
     @Column(name = "total_discount_rate", nullable = false)
     private Integer totalDiscountRate;

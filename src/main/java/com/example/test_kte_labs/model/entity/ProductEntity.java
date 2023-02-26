@@ -20,11 +20,11 @@ public class ProductEntity {
     private String name;
 
     @Column(name = "price", nullable = false)
-    private Integer price;
+    private Double price;
 
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "rating", nullable = false)
-    private Integer rating;
+    @Column(name = "discount_rate", nullable = false)
+    private Integer discountRate;
 }

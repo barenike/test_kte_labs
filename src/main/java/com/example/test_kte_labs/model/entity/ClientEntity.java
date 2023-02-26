@@ -20,8 +20,8 @@ public class ClientEntity {
     private String name;
 
     @Column(name = "first_discount_rate", nullable = false)
-    private String firstDiscountRate;
+    private Integer firstDiscountRate;
 
     @Column(name = "second_discount_rate", nullable = false)
-    private String secondDiscountRate;
+    private Integer secondDiscountRate;
 }
