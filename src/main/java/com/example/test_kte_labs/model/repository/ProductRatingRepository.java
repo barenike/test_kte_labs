@@ -5,9 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ProductRatingRepository extends JpaRepository<ProductRatingEntity, UUID> {
     @Query("select p from ProductRatingEntity p where p.productId = ?1")
     List<ProductRatingEntity> findByProductId(UUID id);
+
+    Optional<ProductRatingEntity> findByClientIdAndProductId(UUID clientId, UUID productId);
 }

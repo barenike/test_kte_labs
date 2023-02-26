@@ -19,16 +19,13 @@ import java.util.UUID;
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final ClientService clientService;
     private final ProductService productService;
     private final OrderDetailService orderDetailService;
 
     public OrderService(OrderRepository orderRepository,
-                        ClientService clientService,
                         ProductService productService,
                         OrderDetailService orderDetailService) {
         this.orderRepository = orderRepository;
-        this.clientService = clientService;
         this.productService = productService;
         this.orderDetailService = orderDetailService;
     }

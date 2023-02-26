@@ -2,7 +2,6 @@ package com.example.test_kte_labs.model.service;
 
 import com.example.test_kte_labs.exceptions.ProductIsNotFoundException;
 import com.example.test_kte_labs.infrastructure.product.ProductCreationRequest;
-import com.example.test_kte_labs.infrastructure.product.ProductExtraInfoResponse;
 import com.example.test_kte_labs.infrastructure.product.ProductFinalPriceRequest;
 import com.example.test_kte_labs.infrastructure.product.ProductResponse;
 import com.example.test_kte_labs.model.entity.ClientEntity;
@@ -18,12 +17,10 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
-    private final ProductRatingService productRatingService;
     private final ClientService clientService;
 
-    public ProductService(ProductRepository productRepository, ProductRatingService productRatingService, ClientService clientService) {
+    public ProductService(ProductRepository productRepository, ClientService clientService) {
         this.productRepository = productRepository;
-        this.productRatingService = productRatingService;
         this.clientService = clientService;
     }
 
@@ -59,15 +56,6 @@ public class ProductService {
                 product.getName(),
                 product.getPrice()
         )).collect(Collectors.toList());
-    }
-
-    public ProductExtraInfoResponse getProductExtraInfoResponse(String id) {
-        ProductEntity product = getProduct(id);
-        ProductExtraInfoResponse response = new ProductExtraInfoResponse();
-        response.setDescription(product.getDescription());
-        response.setAverageRating(productRatingService.getAverageRating(id));
-        response.setRatingMap(productRatingService.getRatingMap(id));
-        return response;
     }
 
     public Double getProductFinalPrice(ProductFinalPriceRequest productFinalPriceRequest) {

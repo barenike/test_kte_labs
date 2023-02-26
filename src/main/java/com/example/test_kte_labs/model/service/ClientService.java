@@ -21,10 +21,6 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public ClientEntity findByClientId(String id) {
-        return clientRepository.findByClientId(UUID.fromString(id));
-    }
-
     public ClientEntity getClient(String id) {
         ClientEntity client = clientRepository.findByClientId(UUID.fromString(id));
         if (client == null) {

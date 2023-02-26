@@ -1,6 +1,7 @@
 package com.example.test_kte_labs.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -22,6 +23,7 @@ public class OrderDetailEntity {
     @Column(name = "product_id", nullable = false)
     private UUID productId;
 
+    @Min(1)
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 

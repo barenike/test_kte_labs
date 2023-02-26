@@ -1,7 +1,6 @@
 package com.example.test_kte_labs.controller.rest;
 
 import com.example.test_kte_labs.infrastructure.product.ProductCreationRequest;
-import com.example.test_kte_labs.infrastructure.product.ProductExtraInfoResponse;
 import com.example.test_kte_labs.infrastructure.product.ProductFinalPriceRequest;
 import com.example.test_kte_labs.infrastructure.product.ProductResponse;
 import com.example.test_kte_labs.model.service.ProductService;
@@ -41,12 +40,6 @@ public class ProductController {
         return products != null && !products.isEmpty()
                 ? new ResponseEntity<>(products, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/product/{id}")
-    public ResponseEntity<?> getProductExtraInfo(@PathVariable(name = "id") String id) {
-        final ProductExtraInfoResponse response = productService.getProductExtraInfoResponse(id);
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/product/final_price")

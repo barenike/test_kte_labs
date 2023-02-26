@@ -3,6 +3,7 @@ package com.example.test_kte_labs.model.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Range;
 
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ public class ProductRatingEntity {
     @Column(name = "product_id", nullable = false)
     private UUID productId;
 
+    @Range(min = 1, max = 5)
     @Column(name = "rating", nullable = false)
     private Integer rating;
 }

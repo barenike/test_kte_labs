@@ -1,6 +1,5 @@
 package com.example.test_kte_labs.controller.rest;
 
-import com.example.test_kte_labs.exceptions.ClientIsNotFoundException;
 import com.example.test_kte_labs.infrastructure.client.ChangeDiscountRatesRequest;
 import com.example.test_kte_labs.infrastructure.client.ClientCreationRequest;
 import com.example.test_kte_labs.model.entity.ClientEntity;
@@ -43,13 +42,10 @@ public class ClientController {
                 : new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/discount_rates")
+    @PostMapping("client/discount_rates")
     public ResponseEntity<?> changeDiscountRates(@RequestBody @Valid ChangeDiscountRatesRequest changeDiscountRatesRequest) {
         String id = changeDiscountRatesRequest.getId();
-        ClientEntity client = clientService.findByClientId(id);
-        if (client == null) {
-            throw new ClientIsNotFoundException(id);
-        }
+        ClientEntity client = clientService.getClient(id);
         clientService.changeDiscountRates(client,
                 changeDiscountRatesRequest.getFirstDiscountRate(),
                 changeDiscountRatesRequest.getSecondDiscountRate());
