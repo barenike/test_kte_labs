@@ -18,7 +18,7 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<?> createAndGetCheque(@RequestBody @Valid OrderCreationRequest orderCreationRequest) {
+    public ResponseEntity<String> createAndGetCheque(@RequestBody @Valid OrderCreationRequest orderCreationRequest) {
         String cheque = orderService.createAndGetCheque(orderCreationRequest);
         return new ResponseEntity<>(cheque, HttpStatus.CREATED);
     }

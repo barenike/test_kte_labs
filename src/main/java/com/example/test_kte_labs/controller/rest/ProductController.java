@@ -27,8 +27,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/product/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "id") UUID productId) {
-        final boolean isDeleted = productService.delete(productId);
+    public ResponseEntity<?> delete(@PathVariable(name = "id") UUID id) {
+        final boolean isDeleted = productService.delete(id);
         return isDeleted
                 ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
@@ -43,7 +43,7 @@ public class ProductController {
     }
 
     @PostMapping("/product/final_price")
-    public ResponseEntity<?> getProductFinalPrice(@RequestBody @Valid ProductFinalPriceRequest productFinalPriceRequest) {
+    public ResponseEntity<Double> getProductFinalPrice(@RequestBody @Valid ProductFinalPriceRequest productFinalPriceRequest) {
         Double productFinalPrice = productService.getProductFinalPrice(productFinalPriceRequest);
         return new ResponseEntity<>(productFinalPrice, HttpStatus.OK);
     }

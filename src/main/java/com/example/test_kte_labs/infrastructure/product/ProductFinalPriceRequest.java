@@ -8,10 +8,8 @@ import lombok.Data;
 public class ProductFinalPriceRequest {
     @NotNull
     private String clientId;
-
     @NotNull
     private String productId;
-
     @NotNull
     @Min(1)
     private Integer quantity;

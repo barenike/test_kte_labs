@@ -7,9 +7,7 @@ import lombok.Data;
 public class ProductRateRequest {
     @NotNull
     private String clientId;
-
     @NotNull
     private String productId;
-
     private Integer rating;
 }

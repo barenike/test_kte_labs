@@ -17,7 +17,7 @@ public class ProductRatingController {
     }
 
     @GetMapping("/product/{id}")
-    public ResponseEntity<?> getProductExtraInfo(@PathVariable(name = "id") String id) {
+    public ResponseEntity<ProductExtraInfoResponse> getProductExtraInfo(@PathVariable(name = "id") String id) {
         final ProductExtraInfoResponse response = productRatingService.getProductExtraInfoResponse(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

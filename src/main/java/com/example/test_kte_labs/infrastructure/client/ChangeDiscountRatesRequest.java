@@ -8,11 +8,9 @@ import org.hibernate.validator.constraints.Range;
 public class ChangeDiscountRatesRequest {
     @NotNull
     private String id;
-
     @NotNull
     @Range(min = 0, max = 18)
     private Integer firstDiscountRate;
-
     @NotNull
     @Range(min = 0, max = 18)
     private Integer secondDiscountRate;

@@ -9,10 +9,8 @@ public class ProductCreationRequest {
     @NotNull
     @Size(max = 255)
     private String name;
-
     @NotNull
     private Double price;
-
     @NotNull
     @Size(max = 255)
     private String description;

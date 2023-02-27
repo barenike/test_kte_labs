@@ -69,10 +69,7 @@ public class ProductService {
         double finalPrice = product.getPrice() * quantity;
         finalPrice = finalPrice * (100 - totalDiscountRate) / 100;
 
-        DecimalFormat f = new DecimalFormat("##.00");
-        finalPrice = Double.parseDouble(f.format(finalPrice));
-
-        return finalPrice;
+        return roundToTwoDecimalPlaces(finalPrice);
     }
 
     public Integer getTotalDiscountRate(String clientId, String productId, Integer quantity) {
@@ -96,5 +93,10 @@ public class ProductService {
         }
 
         return totalDiscountRate;
+    }
+
+    Double roundToTwoDecimalPlaces(Double d) {
+        DecimalFormat f = new DecimalFormat("##.00");
+        return Double.parseDouble(f.format(d));
     }
 }

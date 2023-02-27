@@ -8,7 +8,6 @@ import lombok.Data;
 public class OrderCreationDetail {
     @NotNull
     private String productId;
-
     @NotNull
     @Min(0)
     private Integer quantity;

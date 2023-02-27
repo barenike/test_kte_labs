@@ -11,10 +11,8 @@ import java.util.List;
 public class OrderCreationRequest {
     @NotNull
     private String clientId;
-
     @NotNull
     private Double totalPrice;
-
     @NotNull
     @NotEmpty
     private List<OrderCreationDetail> orderCreationDetails;
