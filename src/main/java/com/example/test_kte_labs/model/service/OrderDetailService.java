@@ -5,6 +5,7 @@ import com.example.test_kte_labs.model.entity.OrderDetailEntity;
 import com.example.test_kte_labs.model.repository.OrderDetailRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -35,5 +36,17 @@ public class OrderDetailService {
         orderDetail.setTotalDiscountRate(productService.getTotalDiscountRate(clientId, productId, quantity));
 
         orderDetailRepository.save(orderDetail);
+    }
+
+    public List<OrderDetailEntity> getOrderDetailListByProductId(UUID id) {
+        return orderDetailRepository.findByProductId(id);
+    }
+
+    public List<OrderDetailEntity> getOrderDetailListByOrderId(UUID id) {
+        return orderDetailRepository.findByOrderId(id);
+    }
+
+    public List<UUID> getDistinctOrderIdListByProductId(UUID id) {
+        return orderDetailRepository.getDistinctOrderIdListByProductId(id);
     }
 }

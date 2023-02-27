@@ -9,6 +9,6 @@ public class OrderCreationDetail {
     @NotNull
     private String productId;
     @NotNull
-    @Min(0)
+    @Min(1)
     private Integer quantity;
 }

@@ -5,7 +5,6 @@ import com.example.test_kte_labs.infrastructure.stats.StatsRequest;
 import com.example.test_kte_labs.infrastructure.stats.StatsResponse;
 import com.example.test_kte_labs.model.entity.OrderDetailEntity;
 import com.example.test_kte_labs.model.entity.OrderEntity;
-import com.example.test_kte_labs.model.repository.OrderDetailRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,16 +15,16 @@ public class StatsService {
     private final ClientService clientService;
     private final ProductService productService;
     private final OrderService orderService;
-    private final OrderDetailRepository orderDetailRepository;
+    private final OrderDetailService orderDetailService;
 
     public StatsService(ClientService clientService,
                         ProductService productService,
                         OrderService orderService,
-                        OrderDetailRepository orderDetailRepository) {
+                        OrderDetailService orderDetailService) {
         this.clientService = clientService;
         this.productService = productService;
         this.orderService = orderService;
-        this.orderDetailRepository = orderDetailRepository;
+        this.orderDetailService = orderDetailService;
     }
 
     public StatsResponse getStats(StatsRequest statsRequest) {
@@ -51,14 +50,14 @@ public class StatsService {
         double subtotalProductPricesSum = 0.0;
         double productDiscountsSum = 0.0;
 
-        List<OrderDetailEntity> orderDetails = orderDetailRepository.findByProductId(UUID.fromString(id));
+        List<OrderDetailEntity> orderDetails = orderDetailService.getOrderDetailListByProductId(UUID.fromString(id));
         for (OrderDetailEntity orderDetail : orderDetails) {
             Double subtotalPrice = orderDetail.getSubtotalPrice();
             subtotalProductPricesSum += subtotalPrice;
             productDiscountsSum += subtotalPrice - orderDetail.getTotalPrice();
         }
 
-        statsResponse.setChequeCount(orderDetailRepository.getDistinctOrderIdListByProductId(UUID.fromString(id)).size());
+        statsResponse.setChequeCount(orderDetailService.getDistinctOrderIdListByProductId(UUID.fromString(id)).size());
         statsResponse.setSubtotalPriceSum(subtotalProductPricesSum);
         statsResponse.setDiscountSum(productService.roundToTwoDecimalPlaces(productDiscountsSum));
 
@@ -75,7 +74,7 @@ public class StatsService {
 
         List<OrderEntity> orders = orderService.findByClientId(String.valueOf(UUID.fromString(id)));
         for (OrderEntity order : orders) {
-            List<OrderDetailEntity> orderDetails = orderDetailRepository.findByOrderId(order.getId());
+            List<OrderDetailEntity> orderDetails = orderDetailService.getOrderDetailListByOrderId(order.getId());
             for (OrderDetailEntity orderDetail : orderDetails) {
                 Double subtotalPrice = orderDetail.getSubtotalPrice();
                 subtotalProductPricesSum += subtotalPrice;

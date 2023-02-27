@@ -33,6 +33,16 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    public void setDiscountRate(ProductEntity product, Integer discountRate) {
+        product.setDiscountRate(discountRate);
+        productRepository.save(product);
+    }
+
+    public void deleteDiscountRate(ProductEntity product) {
+        product.setDiscountRate(0);
+        productRepository.save(product);
+    }
+
     public boolean delete(UUID id) {
         if (productRepository.existsById(id)) {
             productRepository.deleteById(id);
@@ -49,7 +59,15 @@ public class ProductService {
         return product;
     }
 
-    public List<ProductResponse> getProducts() {
+    public List<ProductEntity> getProducts() {
+        return productRepository.findAll();
+    }
+
+    public List<ProductEntity> getProductListWithNonZeroDiscountRate() {
+        return productRepository.findByDiscountRateNotZero();
+    }
+
+    public List<ProductResponse> getProductResponseList() {
         List<ProductEntity> products = productRepository.findAll();
         return products.stream().map(product -> new ProductResponse(
                 product.getId().toString(),

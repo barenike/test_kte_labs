@@ -36,7 +36,7 @@ public class ProductController {
 
     @GetMapping("/products")
     public ResponseEntity<List<ProductResponse>> getProducts() {
-        final List<ProductResponse> products = productService.getProducts();
+        final List<ProductResponse> products = productService.getProductResponseList();
         return products != null && !products.isEmpty()
                 ? new ResponseEntity<>(products, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.OK);

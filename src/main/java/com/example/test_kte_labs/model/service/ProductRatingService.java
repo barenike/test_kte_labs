@@ -1,9 +1,12 @@
 package com.example.test_kte_labs.model.service;
 
+import com.example.test_kte_labs.exceptions.ClientDidNotBuyProductException;
 import com.example.test_kte_labs.exceptions.ClientHasAlreadyRatedThisProductException;
 import com.example.test_kte_labs.exceptions.ClientHasNotRatedThisProductException;
 import com.example.test_kte_labs.infrastructure.product.ProductExtraInfoResponse;
 import com.example.test_kte_labs.infrastructure.product.ProductRateRequest;
+import com.example.test_kte_labs.model.entity.OrderDetailEntity;
+import com.example.test_kte_labs.model.entity.OrderEntity;
 import com.example.test_kte_labs.model.entity.ProductEntity;
 import com.example.test_kte_labs.model.entity.ProductRatingEntity;
 import com.example.test_kte_labs.model.repository.ProductRatingRepository;
@@ -15,16 +18,24 @@ import java.util.*;
 @Service
 public class ProductRatingService {
     private final ProductRatingRepository productRatingRepository;
-    private final ProductService productService;
     private final ClientService clientService;
+    private final ProductService productService;
+    private final OrderService orderService;
+    private final OrderDetailService orderDetailService;
 
-    public ProductRatingService(ProductRatingRepository productRatingRepository,
-                                ProductService productService,
-                                ClientService clientService) {
+    public ProductRatingService(
+            ProductRatingRepository productRatingRepository,
+            ClientService clientService,
+            ProductService productService,
+            OrderService orderService,
+            OrderDetailService orderDetailService) {
         this.productRatingRepository = productRatingRepository;
-        this.productService = productService;
         this.clientService = clientService;
+        this.productService = productService;
+        this.orderService = orderService;
+        this.orderDetailService = orderDetailService;
     }
+
 
     public List<ProductRatingEntity> getProductRatingList(String id) {
         return productRatingRepository.findByProductId(UUID.fromString(id));
@@ -71,8 +82,9 @@ public class ProductRatingService {
         UUID clientId = clientService.getClient(productRateRequest.getClientId()).getId();
         UUID productId = productService.getProduct(productRateRequest.getProductId()).getId();
 
-        Optional<ProductRatingEntity> productRatingOptional = productRatingRepository.findByClientIdAndProductId(clientId, productId);
+        checkWhetherClientDidBuyProduct(clientId, productId);
 
+        Optional<ProductRatingEntity> productRatingOptional = productRatingRepository.findByClientIdAndProductId(clientId, productId);
         if (productRateRequest.getRating() == null) {
             if (productRatingOptional.isPresent()) {
                 productRatingRepository.delete(productRatingOptional.get());
@@ -91,5 +103,24 @@ public class ProductRatingService {
         productRating.setProductId(productId);
         productRating.setRating(productRateRequest.getRating());
         productRatingRepository.save(productRating);
+    }
+
+    private void checkWhetherClientDidBuyProduct(UUID clientId, UUID productId) {
+        List<OrderEntity> orders = orderService.findByClientId(String.valueOf(clientId));
+
+        boolean didClientBuyProduct = false;
+        for (OrderEntity order : orders) {
+            List<OrderDetailEntity> orderDetails = orderDetailService.getOrderDetailListByOrderId(order.getId());
+            for (OrderDetailEntity orderDetail : orderDetails) {
+                if (orderDetail.getProductId() == productId) {
+                    didClientBuyProduct = true;
+                    break;
+                }
+            }
+        }
+
+        if (!didClientBuyProduct) {
+            throw new ClientDidNotBuyProductException(clientId, productId);
+        }
     }
 }
