@@ -1,20 +1,21 @@
-package com.example.test_kte_labs.model.service;
+package com.example.test_kte_labs.model.service.task;
 
 import com.example.test_kte_labs.model.entity.ProductEntity;
+import com.example.test_kte_labs.model.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
 
 @Service
-public class ProductDiscountRateTask {
+public class ProductDiscountRateService {
     private final ProductService productService;
 
-    public ProductDiscountRateTask(ProductService productService) {
+    public ProductDiscountRateService(ProductService productService) {
         this.productService = productService;
     }
 
-    public void executeProductDiscountRateJob() {
+    public void executeProductDiscountRateTask() {
         List<ProductEntity> productsWithNotNullDiscountRate = productService.getProductListWithNonZeroDiscountRate();
         productsWithNotNullDiscountRate.forEach(productService::deleteDiscountRate);
 
