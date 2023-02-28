@@ -1,4 +1,4 @@
-package com.example.test_kte_labs.controller.rest;
+package com.example.test_kte_labs.controller;
 
 import com.example.test_kte_labs.infrastructure.product.ProductCreationRequest;
 import com.example.test_kte_labs.infrastructure.product.ProductFinalPriceRequest;

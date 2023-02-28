@@ -112,7 +112,7 @@ public class ProductRatingService {
         for (OrderEntity order : orders) {
             List<OrderDetailEntity> orderDetails = orderDetailService.getOrderDetailListByOrderId(order.getId());
             for (OrderDetailEntity orderDetail : orderDetails) {
-                if (orderDetail.getProductId() == productId) {
+                if (orderDetail.getProductId().equals(productId)) {
                     didClientBuyProduct = true;
                     break;
                 }

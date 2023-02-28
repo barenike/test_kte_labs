@@ -1,12 +1,20 @@
 package com.example.test_kte_labs.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Objects;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "clients")
 public class ClientEntity {
@@ -24,4 +32,17 @@ public class ClientEntity {
 
     @Column(name = "second_discount_rate", nullable = false)
     private Integer secondDiscountRate;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        ClientEntity client = (ClientEntity) o;
+        return getId() != null && Objects.equals(getId(), client.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
